@@ -1,0 +1,4 @@
+<%= form_with(model: @recipe, url: toggle_visibility_recipe_path(@recipe), method: :patch) do |form| %>
+  <%= form.check_box :public %>
+  <%= form.submit 'Toggle Visibility' %>
+<% end %>
