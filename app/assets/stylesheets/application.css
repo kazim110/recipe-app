@@ -13,3 +13,10 @@
  *= require_tree .
  *= require_self
  */
+
+.button-to-link {
+  border: none;
+  background-color: inherit;
+  color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
+  text-decoration: underline;
+}
