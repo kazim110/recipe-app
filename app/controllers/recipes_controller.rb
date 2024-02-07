@@ -1,7 +1,4 @@
 class RecipesController < ApplicationController
-  def index
-  end
-
   def public_recipes
     @public_recipes = Recipe.where(public: true).order(created_at: :desc).includes(:user)
   end
@@ -11,6 +8,7 @@ class RecipesController < ApplicationController
   end
 
   def toggle_visibility
+    @recipe = Recipe.find(params[:id])
     if @recipe.user == current_user
       @recipe.update(public: !@recipe.public)
       redirect_to @recipe, notice: 'Visibility updated successfully.'
