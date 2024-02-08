@@ -22,12 +22,14 @@ class RecipesController < ApplicationController
   def destroy
     if @recipe.user == current_user
       @recipe.destroy
-      
+
       respond_to do |format|
-      format.html { redirect_to recipes_url, notice: 'Recipe was successfully destroyed.' }
-      format.json { head :no_content }
+        format.html { redirect_to recipes_url, notice: 'Recipe was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else
+      redirect_to @recipe, alert: 'You are not authorized to perform this action.'
     end
-    redirect_to @recipe, alert: 'You are not authorized to perform this action.'
   end
 
   # GET /recipes or /recipes.json
@@ -76,7 +78,7 @@ class RecipesController < ApplicationController
   end
 
   private
-  
+
   # Use callbacks to share common setup or constraints between actions.
   def set_recipe
     @recipe = Recipe.find(params[:id])
