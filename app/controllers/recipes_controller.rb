@@ -1,5 +1,5 @@
 class RecipesController < ApplicationController
-   before_action :set_recipe, only: %i[show edit update destroy]
+  before_action :set_recipe, only: %i[show edit update destroy]
 
   def public_recipes
     @public_recipes = Recipe.where(public: true).order(created_at: :desc).includes(:user)
@@ -26,9 +26,8 @@ class RecipesController < ApplicationController
       respond_to do |format|
       format.html { redirect_to recipes_url, notice: 'Recipe was successfully destroyed.' }
       format.json { head :no_content }
-    else
-      redirect_to @recipe, alert: 'You are not authorized to perform this action.'
     end
+    redirect_to @recipe, alert: 'You are not authorized to perform this action.'
   end
 
   # GET /recipes or /recipes.json
