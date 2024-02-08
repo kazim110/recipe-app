@@ -8,8 +8,6 @@ Rails.application.routes.draw do
   resources :foods
   devise_for :users
 
-  root to: 'users#index'
-
-  delete '/foods/:id', to: 'foods#destroy', as: 'foods_destroy'
+  root to: 'foods#index'
 
 end
