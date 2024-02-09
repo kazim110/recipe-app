@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     resources :recipe_foods, only: [:create, :destroy]
   end
   get '/public_recipes', to: 'recipes#public_recipes'
-
+  resources :recipe_foods, only: [:index]
   resources :foods
   devise_for :users
 
