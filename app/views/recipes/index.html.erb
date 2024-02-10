@@ -1,25 +1,25 @@
-
-<h1>Recipes</h1>
-<br>
-<div id="recipes">
-  <% @recipes.each do |recipe| %>
-      <div class="card mb-3 p-4" style="max-width: 700px;" onclick="redirectFunction(<%= recipe.id %>)">
-      <div class="row g-0">
-        <div class="col-md-4">
-          <h5 class="card-title"><%= recipe.name %></h5>
-          <%= button_to "Remove", recipe, method: :delete, class: "button-to-link" %>
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <p class="card-text"><%= recipe.discription %></p>
+<div class="d-flex flex-column align-items-center">
+  <h1>My Recipes</h1>
+  <br>
+  <div id="recipes">
+    <% @recipes.each do |recipe| %>
+        <div class="card mb-3 p-4" style="max-width: 700px;" onclick="redirectFunction(<%= recipe.id %>)">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <h5 class="card-title"><%= recipe.name %></h5>
+            <%= button_to "Remove", recipe, method: :delete, class: "button-to-link" %>
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <p class="card-text"><%= recipe.discription[0..200] %></p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  <% end %>
+    <% end %>
+    <%= link_to "New recipe", new_recipe_path %>
+  </div>
 </div>
-
-<%= link_to "New recipe", new_recipe_path %>
 <script>
 function redirectFunction(id) {
   window.location.href += `/${id}`;

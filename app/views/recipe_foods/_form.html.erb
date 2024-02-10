@@ -1,0 +1,32 @@
+<%= form_with(model: recipe_food, url: recipe_recipe_foods_url(params[:recipe_id])) do |form| %>
+  <% if recipe_food.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(recipe_food.errors.count, "error") %> prohibited this recipe_food from being saved:</h2>
+
+      <ul>
+        <% recipe_food.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :quantity, style: "display: block" %>
+    <%= form.number_field :quantity %>
+  </div>
+  <% options = [] %>
+  <% Food.where(user_id: current_user.id).each do |food|%>
+    <% option = [ food.name, food.id ]%>
+    <% options.push(option) %>
+  <% end %>
+  <div>
+    <%= form.label :food_id, style: "display: block" %>
+    <%= form.select :food_id, options_for_select(options), prompt: 'Select an option' %>
+  </div>
+
+  <br>
+  <div>
+    <%= form.submit class: "btn btn-primary" %>
+  </div>
+<% end %>
