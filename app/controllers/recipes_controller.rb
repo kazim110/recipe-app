@@ -1,4 +1,5 @@
 class RecipesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_recipe, only: %i[show edit update destroy]
 
   def public_recipes
@@ -13,6 +14,7 @@ class RecipesController < ApplicationController
     @recipe = Recipe.find(params[:id])
     if @recipe.user == current_user
       @recipe.update(public: !@recipe.public)
+      puts @recipe
       redirect_to @recipe, notice: 'Visibility updated successfully.'
     else
       redirect_to @recipe, alert: 'You are not authorized to perform this action.'
@@ -35,7 +37,7 @@ class RecipesController < ApplicationController
   # GET /recipes or /recipes.json
   def index
     @current_user = current_user
-    @recipes = @current_user.recipes
+    @recipes = Recipe.all
   end
 
   # GET /recipes/new

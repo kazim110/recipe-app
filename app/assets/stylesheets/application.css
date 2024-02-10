@@ -21,3 +21,73 @@
   text-decoration: underline;
   padding-left: 0;
 }
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  color: #333;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+strong {
+  color: #555;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* app/assets/stylesheets/application.css */
+
+.toggle-visibility-button input {
+  display: none;
+}
+
+.toggle-visibility-button .toggle-label {
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+  background-color: #ccc;
+  border-radius: 10px;
+  position: relative;
+  cursor: pointer;
+}
+
+.toggle-visibility-button input:checked + .toggle-label {
+  background-color: #2196F3;
+}
+
+.toggle-visibility-button .toggle-label::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background-color: white;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 2px;
+  transition: transform 0.3s ease;
+}
+
+.toggle-visibility-button input:checked + .toggle-label::after {
+  left: calc(100% - 18px);
+  transform: translateY(-50%);
+}

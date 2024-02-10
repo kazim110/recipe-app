@@ -1,6 +1,6 @@
 <h1><%= @recipe.name %></h1>
 
-<%= render 'toggle_visibility_button' if current_user == @recipe.user %>
+<%= render 'toggle_visibility_button' %>
 
 <% if current_user == @recipe.user || @recipe.public %>
   <!-- Display recipe details -->
