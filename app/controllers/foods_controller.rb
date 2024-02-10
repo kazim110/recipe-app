@@ -25,14 +25,18 @@ class FoodsController < ApplicationController
     @current_user = current_user
     @food = @current_user.foods.new(food_params)
     @food.user_id = @current_user.id
-
-    respond_to do |format|
-      if @food.save
-        format.html { redirect_to food_url(@food), notice: 'Food was successfully created.' }
-        format.json { render :show, status: :created, location: @food }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @food.errors, status: :unprocessable_entity }
+    food_name_test = Food.find_by(name: @food.name, user_id: @food.user_id)
+    if food_name_test
+      redirect_to new_food_path, alert: 'couldnot create this food as its name is already exisiting in your food list'
+    else
+      respond_to do |format|
+        if @food.save
+          format.html { redirect_to food_url(@food), notice: 'Food was successfully created.' }
+          format.json { render :show, status: :created, location: @food }
+        else
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @food.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -52,11 +56,15 @@ class FoodsController < ApplicationController
 
   # DELETE /foods/1 or /foods/1.json
   def destroy
-    @food.destroy
-
-    respond_to do |format|
-      format.html { redirect_to foods_url, notice: 'Food was successfully destroyed.' }
-      format.json { head :no_content }
+    filtered_recipe_foods = RecipeFood.find_by(food_id: @food.id)
+    if filtered_recipe_foods
+      redirect_to foods_url, alert: 'Cannot destroy this food cause it is contained in one of your recipes'
+    else
+      @food.destroy
+      respond_to do |format|
+        format.html { redirect_to foods_url, notice: 'Food was successfully destroyed.' }
+        format.json { head :no_content }
+      end
     end
   end
 

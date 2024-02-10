@@ -1,0 +1,32 @@
+<div class="d-flex flex-column align-items-center">
+  <h1>Public Recipes</h1>
+  <br>
+  <% price = 0%>
+  <div id="recipes">
+    <% Recipe.order(created_at: :desc).each do |recipe| %>
+      <% if recipe.public %>
+      <div class="card mb-3 p-4" style="width: 900px;" onclick="redirectFunction(<%= recipe.id %>)">
+        <div class="row g-0">
+          <div class="col-md-6">
+            <h5 class="card-title captialize"><%= recipe.name %></h5>
+            <p>By: <%= recipe.user.name %></p>
+          </div>
+          <div class="col-md-6">
+            <% recipe.recipe_foods.each do |recipe_food| %>
+              <% price = price + recipe_food.quantity * Food.find(recipe_food.food_id).price %>
+            <% end %>
+            <p>Total food items: <%= recipe.recipe_foods.length %></p>
+            <p>Total price: $<%= price %></p>
+            <% price = 0 %>
+          </div>
+        </div>
+      </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+<script>
+function redirectFunction(id) {
+  window.location.href = `/recipes/${id}`;
+}
+</script>

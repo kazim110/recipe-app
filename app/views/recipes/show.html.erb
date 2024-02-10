@@ -1,40 +1,48 @@
-<h1><%= @recipe.name %></h1>
-
-<%= render 'toggle_visibility_button' if current_user == @recipe.user %>
-
-<% if current_user == @recipe.user || @recipe.public %>
-  <!-- Display recipe details -->
-  <p>Preparation time: <%= @recipe.preparation_time %></p>
-  <p>Cooking time: <%= @recipe.cooking_time %></p>
-  <p>Steps: <%= @recipe.discription %></p>
-
-  <table>
-    <thead>
+<%= render @recipe %>
+<% if current_user.present? && @recipe.user_id == current_user.id %>
+<div class="show-links">
+  <%= link_to "Edit this recipe", edit_recipe_path(@recipe) %> |
+  <%= link_to "Back to recipes", recipes_path %> |
+  <%= button_to "Destroy this recipe", @recipe, method: :delete, class: "button-to-link"%>
+</div>
+<br>
+<div class="buttons-group d-flex justify-content-between">
+  <%= link_to "Generate shopping list", general_shopping_list_path, class:"btn btn-primary" %>
+  <%= link_to "Add ingredient", new_recipe_recipe_food_url(@recipe), class:"btn btn-primary" %>
+</div>
+<hr>
+<% filtered_recipe_foods = RecipeFood.where(recipe_id: @recipe.id)%>
+<table id="recipe-ingredients" class="table table-bordered">
+  <thead>
       <tr>
-        <th>Name</th>
-        <th>Quantity</th>
-        <th>Value</th>
-        <th>Action</th>
-      </tr>
+        <th scope="col">#</th>
+        <th scope="col">Food</th>
+        <th scope="col">total price</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Show this food</th>
+        <th scope="col">Actions</th>
+    </tr>
     </thead>
     <tbody>
-      <% @recipe.foods.each do |food| %>
-        <tr>
-          <td><%= food.name %></td>
-          <td><%= food.quantity %></td>
-          <td><%= food.value %></td>
-          <td>
-            <!-- Add action button/link here -->
-            <%= link_to 'Edit', edit_food_path(food) %>
-            <%= link_to 'Delete', food_path(food), method: :delete, data: { confirm: 'Are you sure?' } %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-  <% if current_user == @recipe.user %>
-    <%= link_to 'Add New Food', new_food_path(recipe_id: @recipe.id) %>
+  <% filtered_recipe_foods.each_with_index do |filtered_recipe_food, index| %>
+  <% food = Food.find(filtered_recipe_food.food_id) %>
+  <% recipe = Recipe.find(filtered_recipe_food.recipe_id) %>
+  <tr id="<%= dom_id food %>">
+    <th scope="row"><%= index + 1 %></th>
+    <td><%= food.name %></td>
+    <td><%= food.price * filtered_recipe_food.quantity %> $</td>
+    <td><%= food.quantity * filtered_recipe_food.quantity %> <%= food.measurement_unit %></td>
+    <td>
+      <%= link_to "link", food %>
+    </td>
+    <td>
+      <%= link_to "Modify", edit_recipe_recipe_food_path(recipe, filtered_recipe_food.id) %> |
+      <%= button_to "Remove", recipe_recipe_food_url(recipe, filtered_recipe_food.id), method: :delete, class: "button-to-link" %>
+    </td>
+  </tr>
   <% end %>
+  </tbody>
+</table>
 <% else %>
-  <p>This recipe is private.</p>
+  <%= link_to "Back to recipes", recipes_path %>
 <% end %>
