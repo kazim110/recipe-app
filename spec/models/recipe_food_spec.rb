@@ -8,7 +8,7 @@ RSpec.describe RecipeFood, type: :model do
       user:,
       preparation_time: 15,
       cooking_time: 15,
-      description: 'very delicious recipe!',
+      discription: 'very delicious recipe!',
       public: true
     )
   end
