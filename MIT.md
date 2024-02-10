@@ -1,4 +1,4 @@
-## Copyright 2023, [Mohammad Kazim and Mark Rubanza]
+## Copyright 2023, [MOHAMMAD KAZIM & MARK RUBANZA]
 
 
 
