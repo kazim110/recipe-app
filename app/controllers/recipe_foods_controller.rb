@@ -1,10 +1,13 @@
 class RecipeFoodsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_recipe_food, only: %i[show edit update destroy]
 
-  # GET /recipe_foods or /recipe_foods.json
   def index
-    @recipe = Recipe.find(params[:recipe_id])
-    redirect_to @recipe
+#     @recipe = Recipe.find(params[:recipe_id])
+#     redirect_to @recipe
+    @recipe_foods = current_user.recipe_foods.includes(:food, :recipe)
+    @total_items = @recipe_foods.sum(:quantity)
+    @total_price = @recipe_foods.sum { |item| item.quantity * item.food.price }
   end
 
   # GET /recipe_foods/1 or /recipe_foods/1.json

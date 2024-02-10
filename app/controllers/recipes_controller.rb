@@ -1,14 +1,43 @@
 class RecipesController < ApplicationController
   before_action :set_recipe, only: %i[show edit update destroy new_food create_food]
 
+  def public_recipes
+    @public_recipes = Recipe.where(public: true).order(created_at: :desc).includes(:user)
+  end
+
+  def show
+    @recipe = Recipe.find(params[:id])
+  end
+
+  def toggle_visibility
+    @recipe = Recipe.find(params[:id])
+    if @recipe.user == current_user
+      @recipe.update(public: !@recipe.public)
+      redirect_to @recipe, notice: 'Visibility updated successfully.'
+    else
+      redirect_to @recipe, alert: 'You are not authorized to perform this action.'
+    end
+  end
+
+  def destroy
+    if @recipe.user == current_user
+      filtered_recipe_foods = RecipeFood.where(recipe_id: @recipe.id)
+      filtered_recipe_foods.destroy_all
+      @recipe.destroy
+
+      respond_to do |format|
+      format.html { redirect_to recipes_url, notice: 'Recipe was successfully destroyed.' }
+      format.json { head :no_content }
+    else
+      redirect_to @recipe, alert: 'You are not authorized to perform this action.'
+    end
+  end
+
   # GET /recipes or /recipes.json
   def index
     @current_user = current_user
     @recipes = @current_user.recipes
   end
-
-  # GET /recipes/1 or /recipes/1.json
-  def show; end
 
   # GET /recipes/new
   def new
@@ -70,18 +99,6 @@ class RecipesController < ApplicationController
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @recipe.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # DELETE /recipes/1 or /recipes/1.json
-  def destroy
-    filtered_recipe_foods = RecipeFood.where(recipe_id: @recipe.id)
-    filtered_recipe_foods.destroy_all
-    @recipe.destroy
-
-    respond_to do |format|
-      format.html { redirect_to recipes_url, notice: 'Recipe was successfully destroyed.' }
-      format.json { head :no_content }
     end
   end
 
