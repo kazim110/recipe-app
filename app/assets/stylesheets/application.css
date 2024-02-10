@@ -28,6 +28,7 @@ body {
 
 h1 {
   color: #333;
+  text-align: center;
 }
 
 ul {
@@ -47,11 +48,53 @@ strong {
 
 a {
   color: #007bff;
-  text-decoration: none;
 }
 
 a:hover {
   text-decoration: underline;
+}
+
+.recipe-link {
+  display: flex;
+  text-decoration: none !important;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.recipe-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.recipe-item {
+  margin-bottom: 20px;
+}
+
+.recipe-link {
+  text-decoration: none;
+  color: #333;
+  display: flex; /* Align items horizontally */
+  justify-content: space-around; /* Space out the content */
+}
+
+.recipe-details h4 {
+  margin: 0;
+}
+
+.recipe-details p {
+  margin: 5px 0;
+}
+
+.recipe-stats {
+  text-align: left;
+}
+
+.recipe-stats p {
+  margin: 5px 0;
+}
+
+.recipe-stats p:first-child {
+  margin-top: 0;
 }
 
 /* app/assets/stylesheets/application.css */

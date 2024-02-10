@@ -1,9 +1,10 @@
 class RecipesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_recipe, only: %i[show edit update destroy]
+  helper_method :calculate_total_price
 
   def public_recipes
-    @public_recipes = Recipe.where(public: true).order(created_at: :desc).includes(:user)
+    @public_recipes = Recipe.where(public: true).order(created_at: :desc).includes(recipe_foods: :food)
   end
 
   def show
@@ -11,14 +12,8 @@ class RecipesController < ApplicationController
   end
 
   def toggle_visibility
-    @recipe = Recipe.find(params[:id])
-    if @recipe.user == current_user
-      @recipe.update(public: !@recipe.public)
-      puts @recipe
-      redirect_to @recipe, notice: 'Visibility updated successfully.'
-    else
-      redirect_to @recipe, alert: 'You are not authorized to perform this action.'
-    end
+    @recipe.update(is_public: !@recipe.is_public)
+    redirect_to @recipe, notice: 'Recipe visibility updated.'
   end
 
   def destroy
