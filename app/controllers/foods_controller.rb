@@ -1,15 +1,16 @@
 class FoodsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_food, only: %i[show edit update destroy]
 
   # GET /foods or /foods.json
   def index
-    @current_user = current_user
-    @foods = @current_user.foods
-    # @foods = Food.all
+    @foods = current_user.foods
   end
 
   # GET /foods/1 or /foods/1.json
-  def show; end
+  def show
+    @recipe_foods = @food.recipe_foods.includes(:recipe)
+  end
 
   # GET /foods/new
   def new
@@ -72,7 +73,7 @@ class FoodsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_food
-    @food = Food.find(params[:id])
+    @food = current_user.foods.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

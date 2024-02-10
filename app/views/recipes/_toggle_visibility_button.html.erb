@@ -1,1 +1,6 @@
-<%= button_to 'Toggle Visibility', toggle_visibility_recipe_path(@recipe), method: :patch, remote: true %>
+<% if current_user == @recipe.user %>
+  <div class="toggle-visibility-button">
+    <input type="checkbox" id="toggle-public" <%= @recipe.public ? 'checked' : '' %> data-recipe-id="<%= @recipe.id %>">
+    <label for="toggle-public" class="toggle-label"></label>
+  </div>
+<% end %>

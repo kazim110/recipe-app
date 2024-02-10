@@ -1,22 +1,19 @@
 class RecipesController < ApplicationController
+  before_action :authenticate_user!
+  helper_method :calculate_total_price
   before_action :set_recipe, only: %i[show edit update destroy new_food create_food]
 
   def public_recipes
-    @public_recipes = Recipe.where(public: true).order(created_at: :desc).includes(:user)
+    @public_recipes = Recipe.where(public: true).order(created_at: :desc).includes(:recipe_foods)
   end
 
   def show
-    @recipe = Recipe.find(params[:id])
+    @recipe = Recipe.includes(:foods, :recipe_foods).find(params[:id])
   end
 
   def toggle_visibility
-    @recipe = Recipe.find(params[:id])
-    if @recipe.user == current_user
-      @recipe.update(public: !@recipe.public)
-      redirect_to @recipe, notice: 'Visibility updated successfully.'
-    else
-      redirect_to @recipe, alert: 'You are not authorized to perform this action.'
-    end
+    @recipe.update(is_public: !@recipe.is_public)
+    redirect_to @recipe, notice: 'Recipe visibility updated.'
   end
 
   def destroy
@@ -38,7 +35,7 @@ class RecipesController < ApplicationController
   # GET /recipes or /recipes.json
   def index
     @current_user = current_user
-    @recipes = @current_user.recipes
+    @recipes = Recipe.all
   end
 
   # GET /recipes/new
@@ -67,31 +64,30 @@ class RecipesController < ApplicationController
     end
   end
 
-  # def new_food
-  #   @current_user = current_user
-  #   if @recipe.user_id != current_user.id
-  #     redirect_to recipe_url(@recipe), alert: 'You donot have the authority to modify that recipe!.'
-  #   end
-  #   @food = Food.new
-  # end
+  def new_food
+    @current_user = current_user
+    if @recipe.user_id != current_user.id
+      redirect_to recipe_url(@recipe), alert: 'You donot have the authority to modify that recipe!.'
+    end
+    @food = Food.new
+  end
 
-  # def create_food
-  #   # @food = Food.new(food_params)
-  #   @food = @recipe.foods.new(food_params)
-  #   @food.recipe_id = @recipe.id
-  #   @food.user_id = @recipe.user_id
+  def create_food
+    # @food = Food.new(food_params)
+    @food = @recipe.foods.new(food_params)
+    @food.recipe_id = @recipe.id
+    @food.user_id = @recipe.user_id
 
-  #   respond_to do |format|
-  #     if @food.save
-  #       format.html { redirect_to food_url(@food), notice: 'Food was successfully added to the recipe.' }
-  #       format.json { render :show, status: :created, location: @food }
-  #     else
-  #       format.html { render :new, status: :unprocessable_entity }
-  #       format.json { render json: @food.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
-  # PATCH/PUT /recipes/1 or /recipes/1.json
+    respond_to do |format|
+      if @food.save
+        format.html { redirect_to food_url(@food), notice: 'Food was successfully added to the recipe.' }
+        format.json { render :show, status: :created, location: @food }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @food.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 
   def update
     respond_to do |format|
