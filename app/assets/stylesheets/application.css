@@ -55,10 +55,7 @@ a:hover {
 }
 
 .recipe-link {
-  display: flex;
-  text-decoration: none !important;
-  margin-bottom: 10px;
-  padding: 10px;
+
 }
 
 .recipe-list {
@@ -71,7 +68,9 @@ a:hover {
 }
 
 .recipe-link {
-  text-decoration: none;
+  text-decoration: none !important;
+  margin-bottom: 10px;
+  padding: 10px;
   color: #333;
   display: flex; /* Align items horizontally */
   justify-content: space-around; /* Space out the content */
@@ -79,6 +78,10 @@ a:hover {
 
 .recipe-details h4 {
   margin: 0;
+}
+
+p {
+  font-size: 17px;
 }
 
 .recipe-details p {
@@ -114,7 +117,7 @@ a:hover {
 }
 
 .toggle-visibility-button input:checked + .toggle-label {
-  background-color: #2196F3;
+  background-color: #2196f3;
 }
 
 .toggle-visibility-button .toggle-label::after {
@@ -133,10 +136,6 @@ a:hover {
 .toggle-visibility-button input:checked + .toggle-label::after {
   left: calc(100% - 18px);
   transform: translateY(-50%);
-}
-
-p {
-  font-size: 17px;
 }
 
 .form-check-input:checked {

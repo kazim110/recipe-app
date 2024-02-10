@@ -1,5 +1,4 @@
 class RecipesController < ApplicationController
-
   before_action :authenticate_user!
   helper_method :calculate_total_price
   before_action :set_recipe, only: %i[show edit update destroy new_food create_food]
@@ -89,7 +88,6 @@ class RecipesController < ApplicationController
       end
     end
   end
-  # PATCH/PUT /recipes/1 or /recipes/1.json
 
   def update
     respond_to do |format|
