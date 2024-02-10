@@ -112,6 +112,11 @@ GEM
     drb (2.2.0)
       ruby2_keywords
     erubi (1.12.0)
+    factory_bot (6.4.6)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.4.3)
+      factory_bot (~> 6.4)
+      railties (>= 5.0.0)
     globalid (1.1.0)
       activesupport (>= 5.0)
     i18n (1.13.0)
@@ -300,6 +305,7 @@ DEPENDENCIES
   capybara
   debug
   devise
+  factory_bot_rails (~> 6.2, >= 6.2.0)
   importmap-rails
   jbuilder
   pg

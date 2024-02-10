@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'PublicRecipes', type: :request do
   let(:user) do
     User.destroy_all
-    User.create(name: '', email: '', password: '')
+    User.create(name: 'Rubanza Mark', email: 'markrubanza10@gmail.com', password: '123456')
   end
   it 'test the response status of public recipes page is ok' do
     user.confirm
