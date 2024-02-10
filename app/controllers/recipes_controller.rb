@@ -20,16 +20,18 @@ class RecipesController < ApplicationController
   end
 
   def destroy
-    if @recipe.user == current_user
-      filtered_recipe_foods = RecipeFood.where(recipe_id: @recipe.id)
-      filtered_recipe_foods.destroy_all
-      @recipe.destroy
+    if @recipe.user != current_user
+      redirect_to @recipe, alert: 'You are not authorized to perform this action.'
+      return
+    end
 
-      respond_to do |format|
+    filtered_recipe_foods = RecipeFood.where(recipe_id: @recipe.id)
+    filtered_recipe_foods.destroy_all
+    @recipe.destroy
+
+    respond_to do |format|
       format.html { redirect_to recipes_url, notice: 'Recipe was successfully destroyed.' }
       format.json { head :no_content }
-    else
-      redirect_to @recipe, alert: 'You are not authorized to perform this action.'
     end
   end
 
@@ -90,6 +92,7 @@ class RecipesController < ApplicationController
   #   end
   # end
   # PATCH/PUT /recipes/1 or /recipes/1.json
+
   def update
     respond_to do |format|
       if @recipe.update(recipe_params)
@@ -101,6 +104,7 @@ class RecipesController < ApplicationController
       end
     end
   end
+
 
   private
 

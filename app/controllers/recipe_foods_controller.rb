@@ -3,8 +3,8 @@ class RecipeFoodsController < ApplicationController
   before_action :set_recipe_food, only: %i[show edit update destroy]
 
   def index
-#     @recipe = Recipe.find(params[:recipe_id])
-#     redirect_to @recipe
+    #     @recipe = Recipe.find(params[:recipe_id])
+    #     redirect_to @recipe
     @recipe_foods = current_user.recipe_foods.includes(:food, :recipe)
     @total_items = @recipe_foods.sum(:quantity)
     @total_price = @recipe_foods.sum { |item| item.quantity * item.food.price }
