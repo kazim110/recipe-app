@@ -22,8 +22,116 @@
   padding-left: 0;
 }
 
+body {
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  color: #333;
+  text-align: center;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+strong {
+  color: #555;
+}
+
+a {
+  color: #007bff;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.recipe-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.recipe-item {
+  margin-bottom: 20px;
+}
+
+.recipe-link {
+  text-decoration: none !important;
+  margin-bottom: 10px;
+  padding: 10px;
+  color: #333;
+  display: flex; /* Align items horizontally */
+  justify-content: space-around; /* Space out the content */
+}
+
+.recipe-details h4 {
+  margin: 0;
+}
+
 p {
   font-size: 17px;
+}
+
+.recipe-details p {
+  margin: 5px 0;
+}
+
+.recipe-stats {
+  text-align: left;
+}
+
+.recipe-stats p {
+  margin: 5px 0;
+}
+
+.recipe-stats p:first-child {
+  margin-top: 0;
+}
+
+/* app/assets/stylesheets/application.css */
+
+.toggle-visibility-button input {
+  display: none;
+}
+
+.toggle-visibility-button .toggle-label {
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+  background-color: #ccc;
+  border-radius: 10px;
+  position: relative;
+  cursor: pointer;
+}
+
+.toggle-visibility-button input:checked + .toggle-label {
+  background-color: #2196f3;
+}
+
+.toggle-visibility-button .toggle-label::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background-color: white;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 2px;
+  transition: transform 0.3s ease;
+}
+
+.toggle-visibility-button input:checked + .toggle-label::after {
+  left: calc(100% - 18px);
+  transform: translateY(-50%);
 }
 
 .form-check-input:checked {
@@ -33,10 +141,6 @@ p {
 .show-links {
   display: flex;
   gap: 10px;
-}
-
-h1 {
-  text-align: center;
 }
 
 .captialize {
