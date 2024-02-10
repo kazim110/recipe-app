@@ -21,3 +21,28 @@
   text-decoration: underline;
   padding-left: 0;
 }
+
+p {
+  font-size: 17px;
+}
+
+.form-check-input:checked {
+  background-color: var(--bs-success) !important;
+}
+
+.show-links {
+  display: flex;
+  gap: 10px;
+}
+
+h1 {
+  text-align: center;
+}
+
+.captialize {
+  text-transform: capitalize;
+}
+
+.whiten {
+  color: white !important;
+}

@@ -1,5 +1,5 @@
 class RecipesController < ApplicationController
-  before_action :set_recipe, only: %i[show edit update destroy]
+  before_action :set_recipe, only: %i[show edit update destroy new_food create_food]
 
   # GET /recipes or /recipes.json
   def index
@@ -36,6 +36,30 @@ class RecipesController < ApplicationController
     end
   end
 
+  # def new_food
+  #   @current_user = current_user
+  #   if @recipe.user_id != current_user.id
+  #     redirect_to recipe_url(@recipe), alert: 'You donot have the authority to modify that recipe!.'
+  #   end
+  #   @food = Food.new
+  # end
+
+  # def create_food
+  #   # @food = Food.new(food_params)
+  #   @food = @recipe.foods.new(food_params)
+  #   @food.recipe_id = @recipe.id
+  #   @food.user_id = @recipe.user_id
+
+  #   respond_to do |format|
+  #     if @food.save
+  #       format.html { redirect_to food_url(@food), notice: 'Food was successfully added to the recipe.' }
+  #       format.json { render :show, status: :created, location: @food }
+  #     else
+  #       format.html { render :new, status: :unprocessable_entity }
+  #       format.json { render json: @food.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
   # PATCH/PUT /recipes/1 or /recipes/1.json
   def update
     respond_to do |format|
@@ -51,6 +75,8 @@ class RecipesController < ApplicationController
 
   # DELETE /recipes/1 or /recipes/1.json
   def destroy
+    filtered_recipe_foods = RecipeFood.where(recipe_id: @recipe.id)
+    filtered_recipe_foods.destroy_all
     @recipe.destroy
 
     respond_to do |format|
@@ -69,5 +95,9 @@ class RecipesController < ApplicationController
   # Only allow a list of trusted parameters through.
   def recipe_params
     params.require(:recipe).permit(:name, :preparation_time, :cooking_time, :description, :public, :user_id)
+  end
+
+  def food_params
+    params.require(:food).permit(:name, :measurement_unit, :price, :quantity, :user_id, :recipe_id)
   end
 end
