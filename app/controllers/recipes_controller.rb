@@ -4,11 +4,11 @@ class RecipesController < ApplicationController
   before_action :set_recipe, only: %i[show edit update destroy new_food create_food]
 
   def public_recipes
-    @public_recipes = Recipe.where(public: true).order(created_at: :desc).includes(recipe_foods: :food)
+    @public_recipes = Recipe.where(public: true).order(created_at: :desc).includes(:recipe_foods)
   end
 
   def show
-    @recipe = Recipe.find(params[:id])
+    @recipe = Recipe.includes(:foods, :recipe_foods).find(params[:id])
   end
 
   def toggle_visibility
