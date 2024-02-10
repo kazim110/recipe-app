@@ -5,7 +5,7 @@ RSpec.describe Recipe, type: :model do
   let(:recipe) do
     Recipe.new(
       name: 'Apple Cake',
-      user: user,
+      user:,
       preparation_time: 15,
       cooking_time: 15,
       description: 'very delicious recipe!',
@@ -15,7 +15,7 @@ RSpec.describe Recipe, type: :model do
   let(:food) do
     Food.new(
       name: 'Orange',
-      user: user,
+      user:,
       measurement_unit: 'gram',
       price: 15,
       quantity: 500
