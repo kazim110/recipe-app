@@ -67,30 +67,30 @@ class RecipesController < ApplicationController
     end
   end
 
-  # def new_food
-  #   @current_user = current_user
-  #   if @recipe.user_id != current_user.id
-  #     redirect_to recipe_url(@recipe), alert: 'You donot have the authority to modify that recipe!.'
-  #   end
-  #   @food = Food.new
-  # end
+  def new_food
+    @current_user = current_user
+    if @recipe.user_id != current_user.id
+      redirect_to recipe_url(@recipe), alert: 'You donot have the authority to modify that recipe!.'
+    end
+    @food = Food.new
+  end
 
-  # def create_food
-  #   # @food = Food.new(food_params)
-  #   @food = @recipe.foods.new(food_params)
-  #   @food.recipe_id = @recipe.id
-  #   @food.user_id = @recipe.user_id
+  def create_food
+    # @food = Food.new(food_params)
+    @food = @recipe.foods.new(food_params)
+    @food.recipe_id = @recipe.id
+    @food.user_id = @recipe.user_id
 
-  #   respond_to do |format|
-  #     if @food.save
-  #       format.html { redirect_to food_url(@food), notice: 'Food was successfully added to the recipe.' }
-  #       format.json { render :show, status: :created, location: @food }
-  #     else
-  #       format.html { render :new, status: :unprocessable_entity }
-  #       format.json { render json: @food.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
+    respond_to do |format|
+      if @food.save
+        format.html { redirect_to food_url(@food), notice: 'Food was successfully added to the recipe.' }
+        format.json { render :show, status: :created, location: @food }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @food.errors, status: :unprocessable_entity }
+      end
+    end
+  end
   # PATCH/PUT /recipes/1 or /recipes/1.json
 
   def update
