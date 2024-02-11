@@ -1,0 +1,26 @@
+<h1>Shopping List</h1>
+
+<p>Total food items to buy: <%= @total_items %></p>
+<p>Total value of food needed: <%= number_to_currency(@total_price) %></p>
+
+<h2>Missing Ingredients:</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Quantity</th>
+      <th>Price per unit</th>
+      <th>Total Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @recipe_foods.each do |item| %>
+      <tr>
+        <td><%= item.food.name %></td>
+        <td><%= item.quantity %></td>
+        <td><%= number_to_currency(item.food.price) %></td>
+        <td><%= number_to_currency(item.quantity * item.food.price) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

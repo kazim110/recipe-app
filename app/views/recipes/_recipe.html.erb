@@ -1,0 +1,26 @@
+<div id="<%= dom_id recipe %>">
+  <h1 style="text-align:center;text-transform: capitalize;"><%= recipe.name %></h1>
+  <div class="d-flex justify-content-between">
+    <p>
+      <strong>Preparation time:</strong>
+      <%= recipe.preparation_time %> minutes
+    </p>
+    <% if current_user.present? && recipe.user_id == current_user.id %>
+    <%= form_with(model: recipe) do |form| %>
+        <div class="form-check form-switch ">
+            <%= form.check_box :public, class: "form-check-input", onchange: "this.form.submit();" %>
+            <%= form.label :public, class: "form-check-label", style: "display: block" %>
+        </div>
+    <% end %>
+    <% end %>
+  </div>
+  <p>
+    <strong>Cooking time:</strong>
+    <%= recipe.cooking_time %> minutes
+  </p>
+
+  <p>
+    <%= recipe.discription %>
+  </p>
+
+</div>

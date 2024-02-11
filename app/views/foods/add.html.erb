@@ -1,0 +1,10 @@
+<h2>Add a new food</h2>
+
+<%= form_with(model: Food.new, url: foods_path, method: :post, html: { class: "foods-form" }) do |form| %>
+
+<%= form.label :name %>
+<%= form.text_field :name %>
+
+<%= form.submit "Add new food" %>
+
+<% end %>

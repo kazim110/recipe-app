@@ -1,0 +1,40 @@
+<h1>Foods</h1>
+
+<div class='food-container'>
+<div class='new-food-btn'>
+<%= link_to "New Food", new_food_path, class: "btn btn-primary" %> 
+</div>
+<div>
+<table id="foods" class="table table-bordered">
+  <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Measurement unit</th>
+        <th scope="col">Price</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Show this food</th>
+        <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+  <% @foods.each_with_index do |food, index| %>
+  <tr id="<%= dom_id food %>">
+    <th scope="row"><%= index + 1 %></th>
+    <td><%= food.name %></td>
+    <td><%= food.measurement_unit %></td>
+    <td><%= food.price %> $</td>
+    <td><%= food.quantity %></td>
+    <td>
+      <%= link_to "link", food %>
+    </td>
+    <td>
+      <%= button_to "Delete", food, method: :delete, class: "button-to-link" %>
+    </td>
+  </tr>
+  <% end %>
+  </tbody>
+</table>
+</div>
+
+</div>

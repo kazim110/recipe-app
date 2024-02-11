@@ -1,0 +1,48 @@
+<% foods = Food.where(user_id: current_user.id) %>
+<% ingredients = [] %>
+<% measurements = [] %>
+<% prices = [] %>
+<% quantites = [] %>
+<% quantity = 0%>
+<% price  = 0 %>
+<% foods.each do |food|%>
+  <% RecipeFood.where(food_id: food.id).each do |recipe_food|%>
+    <% price = price + recipe_food.quantity * food.price %>
+    <% quantity = quantity + recipe_food.quantity * food.quantity %>
+  <% end %>
+  <% prices.push(price) if price != 0%>
+  <% quantites.push(quantity) if price != 0 %>
+  <% ingredients.push(food.name) if price != 0 %>
+  <% measurements.push(food.measurement_unit) if price != 0 %>
+  <% price = 0 %>
+  <% quantity = 0 %>
+<% end %>
+<h1>Shopping List</h1>
+<br>
+<br>
+<div class="d-flex justify-content-between">
+  <p class="fw-semibold">Amount of food items to buy: <%= ingredients.length %> </p>
+  <p class="fw-semibold">Total value of food needed: $ <%= prices.sum %></p>
+</div>
+<br>
+<br>
+<table id="shopping-list-details" class="table table-bordered">
+  <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Food</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% (0...ingredients.length).each do |i|%>
+        <tr>
+            <th scope="row"><%= i + 1 %></th>
+            <td><%= ingredients[i] %></td>
+            <td><%= quantites[i] %> <%= measurements[i] %></td>
+            <td>$ <%= prices[i] %></td>
+        </tr>
+    <% end %>
+  </tbody>
+</table>
