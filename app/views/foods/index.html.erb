@@ -1,5 +1,10 @@
 <h1>Foods</h1>
 
+<div class='food-container'>
+<div class='new-food-btn'>
+<%= link_to "New Food", new_food_path, class: "btn btn-primary" %> 
+</div>
+<div>
 <table id="foods" class="table table-bordered">
   <thead>
       <tr>
@@ -30,5 +35,6 @@
   <% end %>
   </tbody>
 </table>
+</div>
 
-<%= link_to "New food", new_food_path %>
+</div>
