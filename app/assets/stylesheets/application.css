@@ -14,7 +14,7 @@
  *= require_self
  */
 
-.new-food-btn {
+.new-food-btn, .new-recipe-btn {
   justify-content: right;
   display: flex;
   margin: 10px;
